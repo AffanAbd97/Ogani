@@ -7,59 +7,56 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $kategori = Category::all();
+        return view('admin.kategori.index', compact('kategori'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $kategori = Category::all();
+        return view('admin.kategori.create', compact('kategori'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+        $kategori = Category::insert([
+            'nama' => $request->nama,
+        ]);
+
+        return redirect('/kategori')->with('status', 'Data Kategori Berhasil Ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
+    public function edit($id)
     {
-        //
+        $kategori = Category::find($id);
+        return view('admin.kategori.edit', compact('kategori'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+        $kategori = Category::find($id);
+        $kategori->nama = $request->nama;
+        $kategori->save();
+
+        return redirect('/kategori')->with('status', 'Data Kategori Berhasil Diubah');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
+    public function destroy($id)
     {
-        //
+        $kategori = Category::find($id);
+        $kategori->delete();
+
+        return redirect('/kategori')->with('status', 'Data Kategori Berhasil Dihapus');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
-    }
 }

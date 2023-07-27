@@ -3,63 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $kategori = Category::all();
+        $products = Product::paginate(10);
+        $productcount = Product::count();
+       
+        if(Auth::user()){
+            $user = Auth::id();
+            $usercart =Cart::where('user_id', $user)->first();
+            if($usercart){
+                $cartid =$usercart ->id;
+                $counts = CartDetail::where('cart_id', $cartid)->count();
+                $total = $usercart ->total;
+            }else{
+                $counts = 0;
+                $total = 0;
+            }
+           
+        }else{
+          
+           
+          
+            $counts = 0;
+            $total = 0;
+            
+
+            }
+            return view('pages.product', compact('products', 'counts', 'total','kategori','productcount'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    public function show($id){
+        $products = Product::find($id);
+        if(Auth::user()){
+            $user = Auth::id();
+            $usercart =Cart::where('user_id', $user)->first();
+            if($usercart){
+                $cartid =$usercart ->id;
+                $counts = CartDetail::where('cart_id', $cartid)->count();
+                $total = $usercart ->total;
+            }else{
+                $counts = 0;
+                $total = 0;
+            }
+           
+        }else{
+          
+           
+          
+            $counts = 0;
+            $total = 0;
+            
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        //
+            }
+            return view('pages.detail', compact('products', 'counts', 'total'));
+        
     }
 }
