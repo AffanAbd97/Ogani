@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use File;
 use App\Models\Product;
 use App\Models\Category;
+use App\Charts\ProductChart;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -32,7 +33,7 @@ public function index()
     array_push($arr,$kategori[$i]->nama);
     $randomColor =  DashboardController::randomColour();
     $kategoriId =Category::where('nama',$kategori[$i]->nama) -> first()->id;
-    $data->push(Produk::where('kategori_id', $kategoriId)->count());
+    $data->push(Product::where('kategori_id', $kategoriId)->count());
     $arrclr->push($randomColor);
     
     }

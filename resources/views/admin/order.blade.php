@@ -14,8 +14,8 @@
 
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Produk</h4>
-                <a type="button" class="btn btn-success  ml-2" href="/dashboard/create">Tambahkan Data</a>
+                <h4 class="card-title">Data Order</h4>
+         
                 </p>
                 <table class="table table-striped">
                     <thead>

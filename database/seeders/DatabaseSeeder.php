@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use AdminSeeder;
-use ProdukSeeder;
-use KategoriSeeder;
+
 use Illuminate\Database\Seeder;
+use Database\Seeders\AdminSeeder;
+use Database\Seeders\ProdukSeeder;
+use Database\Seeders\KategoriSeeder;
 
 class DatabaseSeeder extends Seeder
 {
